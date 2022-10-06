@@ -17,7 +17,6 @@ const UserSchema = new Schema({
   },
   thoughts: { type: Array },
   friends: { type: Array },
-  friendCount: { type: Number },
 });
 
 UserSchema.virtual("friendCount").get(() => {
