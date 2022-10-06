@@ -66,7 +66,12 @@ router.put("/:id", (req, res) => {
     .catch((err) => res.json(err.message));
 });
 // DELETE thought by id
-router.delete("/:id", (req, res) => {});
+router.delete("/:id", (req, res) => {
+  thoughts
+    .findByIdAndDelete(req.params.id, { new: true })
+    .then((dbThoughtData) => res.json({ message: "Thought Deleted." }))
+    .catch((err) => res.json(err.message));
+});
 // POST new thought reaction
 router.post("/:id/reactions", (req, res) => {});
 // DELETE thought reaction
