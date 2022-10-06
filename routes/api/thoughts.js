@@ -21,7 +21,13 @@ router.get("/", (req, res) => {
 router.get("/:id", (req, res) => {
   thoughts
     .findById(req.params.id)
-    .then((dbData) => res.json(dbData))
+    .then((dbData) =>
+      res.json({
+        username: dbData.username,
+        thoughtText: dbData.thoughtText,
+        createdAt: dbData.createdAt,
+      })
+    )
     .catch((err) => {
       console.error(err), res.json(err);
     });
@@ -49,7 +55,16 @@ router.post("/", (req, res) => {
     .catch((err) => res.json(err.message));
 });
 // PUT thought by id
-router.put("/:id", (req, res) => {});
+router.put("/:id", (req, res) => {
+  thoughts
+    .findByIdAndUpdate(
+      req.params.id,
+      { thoughtText: req.body.thoughtText },
+      { new: true }
+    )
+    .then((dbThoughtData) => res.json(dbThoughtData))
+    .catch((err) => res.json(err.message));
+});
 // DELETE thought by id
 router.delete("/:id", (req, res) => {});
 // POST new thought reaction
