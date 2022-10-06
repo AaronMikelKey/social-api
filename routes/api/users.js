@@ -31,7 +31,16 @@ router.get("/:id", (req, res) => {
     });
 });
 // POST new user
-router.post("/", (req, res) => {});
+router.post("/", (req, res) => {
+  const newUser = {
+    username: req.body.username,
+    email: req.body.email,
+  };
+  users
+    .create(newUser)
+    .then((dbUserData) => res.json(dbUserData))
+    .catch((err) => res.json(err.message));
+});
 // PUT user by id
 router.put("/:id", (req, res) => {});
 // DELETE user by id
