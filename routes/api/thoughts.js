@@ -91,6 +91,19 @@ router.post("/:id/reactions", (req, res) => {
     .catch((err) => res.json(err.message));
 });
 // DELETE thought reaction
-router.delete("/:id/reactions", (req, res) => {});
+router.delete("/:id/reactions", (req, res) => {
+  thoughts
+    .findByIdAndUpdate(
+      req.params.id,
+      {
+        $pull: { reactions: { _id: req.body.reactionId } },
+      },
+      { new: true }
+    )
+    .then((dbThoughtData) => {
+      res.json(dbThoughtData);
+    })
+    .catch((err) => res.json(err.message));
+});
 
 export default router;
