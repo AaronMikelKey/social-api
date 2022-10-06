@@ -1,8 +1,20 @@
 import express from "express";
+import mongoose from "mongoose";
 const router = express.Router();
 
+import UserSchema from "../../models/User.js";
+
+const users = mongoose.model("User", UserSchema);
+
 // GET all users
-router.get("/", (req, res) => {});
+router.get("/", (req, res) => {
+  users
+    .find({})
+    .then((dbUserData) => res.json(dbUserData))
+    .catch((err) => {
+      console.error(err), res.json(err);
+    });
+});
 // GET single user, thoughts, and friends
 router.get("/:id", (req, res) => {});
 // POST new user
@@ -16,4 +28,4 @@ router.post("/:id/friends/:friendId", (req, res) => {});
 // DELETE user friend
 router.delete("/:id/friends/:friendId", (req, res) => {});
 
-module.exports = router;
+export default router;
