@@ -16,4 +16,4 @@ router.post("/:id/reactions", (req, res) => {});
 // DELETE thought reaction
 router.delete("/:id/reactions", (req, res) => {});
 
-module.exports = router;
+export default router;
