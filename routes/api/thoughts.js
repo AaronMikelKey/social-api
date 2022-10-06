@@ -1,19 +1,19 @@
 import express from "express";
 const router = express.Router();
 
-// GET all users
+// GET all thoughts
 router.get("/", (req, res) => {});
-// GET single user, thoughts, and friends
+// GET single thought
 router.get("/:id", (req, res) => {});
-// POST new user
+// POST new thought
 router.post("/", (req, res) => {});
-// PUT user by id
+// PUT thought by id
 router.put("/:id", (req, res) => {});
-// DELETE user by id
+// DELETE thought by id
 router.delete("/:id", (req, res) => {});
-// POST new user friend
-router.post("/:id/friends/:friendId", (req, res) => {});
-// DELETE user friend
-router.delete("/:id/friends/:friendId", (req, res) => {});
+// POST new thought reaction
+router.post("/:id/reactions", (req, res) => {});
+// DELETE thought reaction
+router.delete("/:id/reactions", (req, res) => {});
 
 module.exports = router;
