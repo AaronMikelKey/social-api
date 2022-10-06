@@ -16,7 +16,20 @@ router.get("/", (req, res) => {
     });
 });
 // GET single user, thoughts, and friends
-router.get("/:id", (req, res) => {});
+router.get("/:id", (req, res) => {
+  users
+    .findById(req.params.id)
+    .then((dbUserData) =>
+      res.json({
+        username: dbUserData.username,
+        thoughts: dbUserData.thoughts,
+        friends: dbUserData.friends,
+      })
+    )
+    .catch((err) => {
+      console.error(err), res.json(err);
+    });
+});
 // POST new user
 router.post("/", (req, res) => {});
 // PUT user by id
