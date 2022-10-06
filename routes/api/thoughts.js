@@ -73,7 +73,23 @@ router.delete("/:id", (req, res) => {
     .catch((err) => res.json(err.message));
 });
 // POST new thought reaction
-router.post("/:id/reactions", (req, res) => {});
+router.post("/:id/reactions", (req, res) => {
+  const newReaction = {
+    reactionBody: req.body.reactionBody,
+    username: req.body.username,
+  };
+
+  thoughts
+    .findByIdAndUpdate(
+      req.params.id,
+      { $addToSet: { reactions: newReaction } },
+      { new: true }
+    )
+    .then((dbThoughtData) => {
+      res.json(dbThoughtData);
+    })
+    .catch((err) => res.json(err.message));
+});
 // DELETE thought reaction
 router.delete("/:id/reactions", (req, res) => {});
 
