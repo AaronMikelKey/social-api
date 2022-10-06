@@ -24,6 +24,7 @@ router.get("/:id", (req, res) => {
         username: dbUserData.username,
         thoughts: dbUserData.thoughts,
         friends: dbUserData.friends,
+        friendCount: dbUserData.friendCount,
       })
     )
     .catch((err) => {
