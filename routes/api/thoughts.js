@@ -1,10 +1,29 @@
 import express from "express";
+import mongoose from "mongoose";
 const router = express.Router();
 
+import ThoughtSchema from "../../models/Thought.js";
+
+const thoughts = mongoose.model("Thought", ThoughtSchema);
+
 // GET all thoughts
-router.get("/", (req, res) => {});
+router.get("/", (req, res) => {
+  thoughts
+    .find({})
+    .then((dbData) => res.json(dbData))
+    .catch((err) => {
+      console.error(err), res.json(err);
+    });
+});
 // GET single thought
-router.get("/:id", (req, res) => {});
+router.get("/:id", (req, res) => {
+  thoughts
+    .findById(req.params.id)
+    .then((dbData) => res.json(dbData))
+    .catch((err) => {
+      console.error(err), res.json(err);
+    });
+});
 // POST new thought
 router.post("/", (req, res) => {});
 // PUT thought by id
