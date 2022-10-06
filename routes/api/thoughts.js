@@ -3,8 +3,10 @@ import mongoose from "mongoose";
 const router = express.Router();
 
 import ThoughtSchema from "../../models/Thought.js";
+import UserSchema from "../../models/User.js";
 
 const thoughts = mongoose.model("Thought", ThoughtSchema);
+const users = mongoose.model("User", UserSchema);
 
 // GET all thoughts
 router.get("/", (req, res) => {
@@ -25,7 +27,27 @@ router.get("/:id", (req, res) => {
     });
 });
 // POST new thought
-router.post("/", (req, res) => {});
+router.post("/", (req, res) => {
+  const newThought = {
+    thoughtText: req.body.thoughtText,
+    username: req.body.username,
+  };
+
+  thoughts
+    .create(newThought)
+    .then((dbThoughtData) => {
+      users
+        .findOneAndUpdate(
+          { username: newThought.username },
+          {
+            $addToSet: { thoughts: dbThoughtData._id },
+          }
+        )
+        .then(res.json(dbThoughtData))
+        .catch((err) => res.json(err.message));
+    })
+    .catch((err) => res.json(err.message));
+});
 // PUT thought by id
 router.put("/:id", (req, res) => {});
 // DELETE thought by id
