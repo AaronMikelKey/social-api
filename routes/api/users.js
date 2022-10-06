@@ -42,7 +42,18 @@ router.post("/", (req, res) => {
     .catch((err) => res.json(err.message));
 });
 // PUT user by id
-router.put("/:id", (req, res) => {});
+router.put("/:id", (req, res) => {
+  users
+    .findOneAndUpdate({ _id: req.params.id }, req.body, { new: true })
+    .then((dbUserData) => {
+      if (!dbUserData) {
+        res.json({ message: "No user found with this ID" });
+        return;
+      }
+      res.json(dbUserData);
+    })
+    .catch((err) => res.json(err));
+});
 // DELETE user by id
 router.delete("/:id", (req, res) => {});
 // POST new user friend
