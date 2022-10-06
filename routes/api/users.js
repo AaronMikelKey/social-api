@@ -55,7 +55,18 @@ router.put("/:id", (req, res) => {
     .catch((err) => res.json(err));
 });
 // DELETE user by id
-router.delete("/:id", (req, res) => {});
+router.delete("/:id", (req, res) => {
+  users
+    .findByIdAndDelete(req.params.id)
+    .then((dbUserData) => {
+      if (!dbUserData) {
+        res.json({ message: "No user found with this ID" });
+        return;
+      }
+      res.json({ message: "User deleted." });
+    })
+    .catch((err) => res.json(err));
+});
 // POST new user friend
 router.post("/:id/friends/:friendId", (req, res) => {});
 // DELETE user friend
