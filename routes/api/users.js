@@ -68,7 +68,22 @@ router.delete("/:id", (req, res) => {
     .catch((err) => res.json(err));
 });
 // POST new user friend
-router.post("/:id/friends/:friendId", (req, res) => {});
+router.post("/:id/friends/:friendId", (req, res) => {
+  users
+    .findByIdAndUpdate(
+      req.params.id,
+      { $addToSet: { friends: req.params.friendId } }, // Only adds if not already added
+      { new: true }
+    )
+    .then((dbUserData) => {
+      if (!dbUserData) {
+        res.json({ message: "No user found with this ID" });
+        return;
+      }
+      res.json({ message: "Friend Added." });
+    })
+    .catch((err) => res.json(err));
+});
 // DELETE user friend
 router.delete("/:id/friends/:friendId", (req, res) => {});
 
