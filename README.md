@@ -6,6 +6,8 @@
 
 This is a project demonstrating a NOSQL api that mimicks a social media platform. It includes users, thoughts, and reactions.
 
+[![Example Image](/example.PNG)](example.PNG)
+
 ---
 
 ## Table of Contents
